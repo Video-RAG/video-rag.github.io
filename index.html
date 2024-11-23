@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video-RAG</title>
+
+  <!-- <link rel="icon" href="./static/images/video-mme.png"> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+  <link rel="stylesheet" href="./static/css/video-player.css">
+
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+
+  <script src="./static/js/leaderboard_testmini.js"></script>  
+  <script src="./data/results/output_folders.js" defer></script>
+  <script src="./data/results/model_scores.js" defer></script>
+
+  <script src="./visualizer/data/data_public.js" defer></script>
+
+  <style>
+    .no-sort {
+        cursor: default;
+        pointer-events: none;
+        background-image: none !important; /* Remove the sort arrow */
+    }
+  </style>
+
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <p style="font-size:18px; display: inline; margin-right: -2px; margin-top: 12px;">🔥</p>
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://github.com/BradyFU/Video-MME">
+            <b>Video-MME</b> 
+          </a>
+          <a class="navbar-item" href="https://github.com/Leon1207/3DRefTR">
+            <b>3DRefTR</b> 
+          </a>
+          <a class="navbar-item" href="https://github.com/Leon1207/3DGCTR">
+            <b>3DGCTR</b> 
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold">
+            <span class="video-mme" style="vertical-align: middle">Video-RAG</span>
+            </h1>
+          <h2 class="subtitle is-3 publication-subtitle", style="margin-bottom: 20px;">
+            Visually-aligned Retrieval-Augmented <br> Long Video Comprehension
+          </h2>
+          
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Yongdong Luo<sup style="color:#6fbf73;">1</sup></span>
+            <span class="author-block">Xiawu Zheng<sup style="color:#6fbf73;">1</sup></span>
+            <span class="author-block">Xiao Yang<sup style="color:#6fbf73;">1</sup></span>
+            <span class="author-block">Guilin Li<sup style="color:#6fbf73;">1</sup></span>
+            <span class="author-block">Haojia Lin<sup style="color:#6fbf73;">1</sup></span><br>
+            <span class="author-block">Jinfa Huang<sup style="color:#ed4b82">2</sup></span>
+            <span class="author-block">Jiayi Ji<sup style="color:#6fbf73;">1</sup></span>
+            <span class="author-block">Fei Chao<sup style="color:#6fbf73;">1</sup></span>
+            <span class="author-block">Jiebo Luo<sup style="color:#ed4b82">2</sup></span>
+            <span class="author-block">Rongrong Ji<sup style="color:#6fbf73;">1</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup style="color:#6fbf73;">1</sup>Xiamen University,</span>
+            <span class="author-block"><sup style="color:#ed4b82">2</sup>University of Rochester</span>
+            <!-- <span class="paper-block"><b style="color:#f41c1c">ICLR 2024 Oral</b> (85 in 7304, 1.2%)</span> -->
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2411.13093"
+                   class="external-link button is-normal is-rounded is-dark">
+                <!-- <a href="https://lupantech.github.io/papers/arxiv23_mathvista.pdf"
+                   class="external-link button is-normal is-rounded is-dark"> -->
+                  <span class="icon">
+                      <i class="fas fa-file-alt"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Leon1207/Video-RAG-master"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh; margin-top: -70px;">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          Existing large video-language models (LVLMs) struggle to comprehend long videos correctly due to limited context. 
+          To address this problem, fine-tuning long-context LVLMs and employing GPT-based agents have emerged as promising solutions. 
+          However, fine-tuning LVLMs would require extensive high-quality data and substantial GPU resources, 
+          while GPT-based agents would rely on proprietary models (e.g., GPT-4o). In this paper, 
+          we propose Video Retrieval-Augmented Generation (Video-RAG), 
+          a training-free and cost-effective pipeline that employs visually-aligned auxiliary texts to help facilitate cross-modality alignment while providing additional information beyond the visual content. 
+          Specifically, we leverage open-source external tools to extract visually-aligned information from pure video data (e.g., audio, optical character, and object detection), and incorporate the extracted information into an existing LVLM as auxiliary texts, alongside video frames and queries, in a plug-and-play manner. 
+          Our Video-RAG offers several key advantages: 
+          (i) lightweight with low computing overhead due to single-turn retrieval; 
+          (ii) easy implementation and compatibility with any LVLM; 
+          and (iii) significant, consistent performance gains across long video understanding benchmarks, including Video-MME, MLVU, and LongVideoBench. Notably, our model demonstrates superior performance over proprietary models like Gemini-1.5-Pro and GPT-4o when utilized with a 72B model.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    updateRowNumbers();
+    document.querySelector("#results").addEventListener("click", updateRowNumbers);
+  });
+
+  function updateRowNumbers() {
+    const rows = document.querySelectorAll("#results tbody tr");
+    rows.forEach((row, index) => {
+      row.querySelector("td").innerText = index + 1;
+    });
+  }
+</script>
+
+<section class="section">
+  <div class="container">
+    
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+
+        <h2 class="title is-3" id="leaderboard">Experimental results on Video-MME</h2>
+        <div class="content">
+            <p>
+              By default, this leaderboard is sorted by results with subtitles. To view other sorted results, please click on the corresponding cell.
+            </p>
+          </div>
+
+          <table class="js-sort-table" id="results" style="margin-left: auto; margin-right: auto;">
+            <thead>
+              <tr>
+                <th rowspan="2" class="no-sort" style="vertical-align: middle; width: 50px;" data-js-sort-colNum="none"><strong>#</strong></th>
+                <th rowspan="2" class="no-sort" style="vertical-align: middle; width: 180px;" data-js-sort-colNum="none"><strong>Model</strong></th>
+                <th rowspan="2" class="no-sort" style="vertical-align: middle; width: 50px;" data-js-sort-colNum="none"><strong>LLM <br>Params</strong></th>
+                <th rowspan="2" class="no-sort" style="vertical-align: middle; width: 100px;" data-js-sort-colNum="none"><strong>Frames</strong></th>
+                <th colspan="3" style="vertical-align: middle; width: 300px;" data-js-sort-colNum="6"><strong>Overall (%)</strong></th>
+                <th colspan="3" style="vertical-align: middle; width: 300px;" data-js-sort-colNum="9"><strong>Short Video (%)</strong></th>
+                <th colspan="3" style="vertical-align: middle; width: 300px;" data-js-sort-colNum="12"><strong>Medium Video (%)</strong></th> 
+                <th colspan="3" style="vertical-align: middle; width: 300px;" data-js-sort-colNum="15"><strong>Long Video (%)</strong></th> 
+              </tr>
+              <tr>
+                <th data-js-sort-colNum="4"><strong>w/o subs</strong></th>
+                <th data-js-sort-colNum="5"><strong>w sub</strong></th>
+                <th data-js-sort-colNum="6"><strong>w Ours</strong></th>
+                <th data-js-sort-colNum="7"><strong>w/o sub</strong></th>
+                <th data-js-sort-colNum="8"><strong>w subs</strong></th>
+                <th data-js-sort-colNum="9"><strong>w Ours</strong></th>
+                <th data-js-sort-colNum="10"><strong>w/o sub</strong></th>
+                <th data-js-sort-colNum="11"><strong>w subs</strong></th>
+                <th data-js-sort-colNum="12"><strong>w Ours</strong></th>
+                <th data-js-sort-colNum="13"><strong>w/o sub</strong></th>
+                <th data-js-sort-colNum="14"><strong>w subs</strong></th>
+                <th data-js-sort-colNum="15"><strong>w Ours</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;">
+                  <b class="">
+                    <a href="https://storage.googleapis.com/deepmind-media/gemini/gemini_v1_5_report.pdf" class="ext-link" style="font-size: 16px; margin-left: 5px;">Gemini 1.5 Pro</a>
+                    <p style="font-size: 12px; margin-left: 5px; color: #858383;">Google</p>
+                  </b>
+                </td>
+                <td style="vertical-align: middle;">- </td>
+                <td style="vertical-align: middle;">1/0.5 fps </td>
+                <td style="vertical-align: middle;"><b class="">75.0</b></td>
+                <td style="vertical-align: middle;"><b class="">81.3</b></td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">81.7</td>
+                <td style="vertical-align: middle;">84.5</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">74.3</td>
+                <td style="vertical-align: middle;">81.0</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">67.4</td>
+                <td style="vertical-align: middle;">77.4</td>        
+                <td style="vertical-align: middle;">-</td>                         
+              </tr>
+              
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://huggingface.co/lmms-lab/LLaVA-NeXT-Video-72B-Qwen2" class="ext-link" style="font-size: 16px; margin-left: 5px;">LLaVA-Video
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">Bytedance & NTU S-Lab</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">72B</td>
+                <td style="vertical-align: middle;">64 </td>
+                <td style="vertical-align: middle;"><strong>70.3*</strong></td>
+                <td style="vertical-align: middle;"><strong>76.4*</strong></td>
+                <td style="vertical-align: middle;"> <strong style="color: #22a56e;" >76.8</strong></td>
+                <td style="vertical-align: middle;">80.1*</td>
+                <td style="vertical-align: middle;">82.1*</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >82.7</text></td>
+                <td style="vertical-align: middle;">68.7*</td>
+                <td style="vertical-align: middle;">74.7*</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >74.4</text></td>
+                <td style="vertical-align: middle;">62.1*</td>
+                <td style="vertical-align: middle;">72.6*</td>       
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >73.0</text></td>                          
+              </tr>
+
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://openai.com/index/hello-gpt-4o/" class="ext-link" style="font-size: 16px; margin-left: 5px;">GPT-4o
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">OpenAI</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">- </td>
+                <td style="vertical-align: middle;">384 </td>
+                <td style="vertical-align: middle;"><b class="">71.9</b></td>
+                <td style="vertical-align: middle;"><b class="">77.2</b></td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">80.0</td>
+                <td style="vertical-align: middle;">82.8</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">70.3</td>
+                <td style="vertical-align: middle;">76.6</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">65.3</td> 
+                <td style="vertical-align: middle;">72.1</td>    
+                <td style="vertical-align: middle;">-</td>                       
+              </tr>
+
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://github.com/QwenLM/Qwen2-VL" class="ext-link" style="font-size: 16px; margin-left: 5px;">Qwen2-VL
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">Alibaba</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">72B </td>
+                <td style="vertical-align: middle;">32 </td>
+                <td style="vertical-align: middle;"><b class="">64.9*</b></td>
+                <td style="vertical-align: middle;"><b class="">-</b></td>
+                <td style="vertical-align: middle;"> <strong style="color: #22a56e;" >72.9</strong></td>
+                <td style="vertical-align: middle;">75.0*</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >77.4</text></td>
+                <td style="vertical-align: middle;">63.3*</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >70.2</text></td>
+                <td style="vertical-align: middle;">56.3</td> 
+                <td style="vertical-align: middle;"></td>        
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >71.0</text></td>                   
+              </tr>
+
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://github.com/OpenGVLab/InternVL" class="ext-link" style="font-size: 16px; margin-left: 5px;">InternVL2
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">Shanghai AI Lab</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">34B</td>
+                <td style="vertical-align: middle;">16 </td>
+                <td style="vertical-align: middle;"><strong>61.2</strong></td>
+                <td style="vertical-align: middle;"><strong>62.4</strong></td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">72.0</td>
+                <td style="vertical-align: middle;">72.8</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">59.1</td>
+                <td style="vertical-align: middle;">61.3</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">52.6</td>
+                <td style="vertical-align: middle;">53.0</td>    
+                <td style="vertical-align: middle;">-</td>                             
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://github.com/VectorSpaceLab/Video-XL" class="ext-link" style="font-size: 16px; margin-left: 5px;">Video-XL
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">SJTU & BAAI</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">7B </td>
+                <td style="vertical-align: middle;">128 </td>
+                <td style="vertical-align: middle;"><strong>55.5</strong></td>
+                <td style="vertical-align: middle;"><strong>61.0</strong></td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">64.0</td>
+                <td style="vertical-align: middle;">67.4</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">53.2</td>
+                <td style="vertical-align: middle;">60.7</td>
+                <td style="vertical-align: middle;">-</td>
+                <td style="vertical-align: middle;">49.2</td>
+                <td style="vertical-align: middle;">54.9</td>    
+                <td style="vertical-align: middle;">-</td>                             
+              </tr>
+            
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://huggingface.co/aws-prototyping/long-llava-qwen2-7b" class="ext-link" style="font-size: 16px; margin-left: 5px;">Long-LLaVA
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">Amazon</p>
+                </a> </b></td>
+                <td style="vertical-align: middle;">7B </td>
+                <td style="vertical-align: middle;">64 </td>
+                <td style="vertical-align: middle;"><b class="">52.9</b></td>
+                <td style="vertical-align: middle;"><b class="">57.1</b></td>
+                <td style="vertical-align: middle;"> <strong style="color: #22a56e;" >62.6</strong></td>
+                <td style="vertical-align: middle;">61.9 </td>
+                <td style="vertical-align: middle;">66.2 </td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >67.1</text></td>
+                <td style="vertical-align: middle;">51.4 </td>
+                <td style="vertical-align: middle;">54.7 </td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >60.4</text></td>
+                <td style="vertical-align: middle;">45.4 </td>   
+                <td style="vertical-align: middle;">50.3 </td>   
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >60.1</text></td>                    
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://github.com/EvolvingLMMs-Lab/LongVA" class="ext-link" style="font-size: 16px; margin-left: 5px;">LongVA
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">NTU S-Lab</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">7B</td>
+                <td style="vertical-align: middle;">128 </td>
+                <td style="vertical-align: middle;"><strong>52.6</strong></td>
+                <td style="vertical-align: middle;"><strong>54.3</strong></td>
+                <td style="vertical-align: middle;"> <strong style="color: #22a56e;" >-</strong></td>
+                <td style="vertical-align: middle;">61.1</td>
+                <td style="vertical-align: middle;">61.6</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >-</text></td>
+                <td style="vertical-align: middle;">50.4</td>
+                <td style="vertical-align: middle;">53.6</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >-</text></td>
+                <td style="vertical-align: middle;">46.2</td>
+                <td style="vertical-align: middle;">47.6</td>  
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >-</text></td>                              
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;"></td>
+                <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="https://github.com/PKU-YuanGroup/Video-LLaVA" class="ext-link" style="font-size: 16px; margin-left: 5px;">Video-LLaVA
+                  <p style="font-size: 12px; margin-left: 5px; color: #858383;">PKU</p>
+                </a></b></td>
+                <td style="vertical-align: middle;">7B</td>
+                <td style="vertical-align: middle;">8 </td>
+                <td style="vertical-align: middle;"><strong>39.9</strong></td>
+                <td style="vertical-align: middle;"><strong>41.6</strong></td>
+                <td style="vertical-align: middle;"> <strong style="color: #22a56e;" >45.0</strong></td>
+                <td style="vertical-align: middle;">45.3</td>
+                <td style="vertical-align: middle;">46.1</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >49.5</text></td>
+                <td style="vertical-align: middle;">38.0</td>
+                <td style="vertical-align: middle;">40.7</td>
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >43.0</text></td>
+                <td style="vertical-align: middle;">36.2</td>
+                <td style="vertical-align: middle;">38.1</td>      
+                <td style="vertical-align: middle;"> <text style="color: #22a56e;" >35.5</text></td>                          
+              </tr>
+             
+              
+              
+          
+          </tbody>                                                   
+        </table> 
+
+        <p style=" text-align: left;">
+          * Donates the results of our reproduction.
+        </p>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DATASET SECTION -->
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 mathvista_other">
+    <span class="mathvista_other" style="vertical-align: middle">Video-RAG</span>
+  </h1>
+  </div>
+</section>
+            
+<section class="section">
+  <div class="container">
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+
+  
+          <div class="columns is-centered m-6">
+            <div class="column is-full has-text-centered content">
+              <h2 class="title is-3">Highlights</h2>
+                <div class="box m-5">
+                  <div class="content has-text-centered">
+                    <div style="display: flex; justify-content: center;">
+                      <img src="static/images/radar.png" alt="grade-lv" style="width: 100%;"/>
+                    </div>
+                    <p style="text-align: center; margin-left: auto; margin-right: auto; width: 95%;"> 
+                      Comparison of the performance of Video-RAG with LLaVA-Video-72B, Gemini-1.5-Pro, and GPT-4o across various benchmarks, including the sub-tasks from Video-MME (here we focus only on those that outperform Gemini-1.5-Pro), LongVideoBench, and MLVU benchmarks.</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3">Examples</h2>
+        <div class="content has-text-justified">
+          <p style="text-align: center;", class="mt-3"><strong>We apply Video-RAG on LLaVA-Video for visualization.</strong>
+          </p>
+
+        <div id="results-carousel" class="carousel results-carousel">  
+          
+            <div class="content has-text-centered">
+
+              <img src="static/images/highlight_video/hl1.png" style="width: 95%;"/>
+              <p style="margin-bottom: 30px;">🔗 Full Video Link:&nbsp;&nbsp;<a href="https://www.youtube.com/watch?v=fFjv93ACGo8">https://www.youtube.com/watch?v=fFjv93ACGo8</a></p>
+            
+            </div>
+          
+            <div class="content has-text-centered">
+
+              <img src="static/images/highlight_video/hl2.png" style="width: 95%;"/>
+              <p style="margin-bottom: 30px;">🔗 Full Video Link:&nbsp;&nbsp;<a href="https://www.youtube.com/watch?v=3m29MQ-qPfg">https://www.youtube.com/watch?v=3m29MQ-qPfg</a></p>
+            
+            </div>
+
+            <div class="content has-text-centered">
+
+              <img src="static/images/highlight_video/hl3.png" style="width: 95%;"/>
+              <p style="margin-bottom: 30px;">🔗 Full Video Link:&nbsp;&nbsp;<a href="https://www.youtube.com/watch?v=QHFy-nWNJYk">https://www.youtube.com/watch?v=QHFy-nWNJYk</a></p>
+            
+            </div>
+
+            <div class="content has-text-centered">
+
+              <img src="static/images/highlight_video/hl4.png" style="width: 95%;"/>
+              <p style="margin-bottom: 30px;">🔗 Full Video Link:&nbsp;&nbsp;<a href="https://www.youtube.com/watch?v=9HPFkUhOp1Q">https://www.youtube.com/watch?v=9HPFkUhOp1Q</a></p>
+            
+            </div>
+
+        </div>
+
+          
+        </div>
+      </div> 
+
+        </div>
+      </div>
+    </div>
+    
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+
+  
+          <div class="columns is-centered m-6">
+            <div class="column is-full has-text-centered content">
+              <h2 class="title is-3">Framework of Video-RAG</h2>
+                <div class="box m-5">
+                  <div class="content has-text-centered">
+                    <img src="static/images/framework.png" alt="grade-lv" width="100%"/>
+                    <p style="text-align: center; margin-left: auto; margin-right: auto; width: 95%;"> 
+                      In the query decouple phase, the LVLM is prompted to generate a retrieval request for auxiliary texts. Next, in the auxiliary text generation and retrieval phase, the video is processed in parallel to extract three types of textual information (OCR, ASR, and object detection), and the relevant text is retrieved as the auxiliary text. Finally, in the integration and generation phase, auxiliary texts are combined with the query and the video to generate the response.</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+
+  
+          <div class="columns is-centered m-6">
+            <div class="column is-full has-text-centered content">
+              <h2 class="title is-3">Visually-aligned Visulization</h2>
+                <div class="box m-5">
+                  <div class="content has-text-centered">
+                    <div style="display: flex; justify-content: center;">
+                      <img src="static/images/visually-aligned.png" alt="grade-lv" style="width: 100%;"/>
+                    </div>
+                    <p style="text-align: center; margin-left: auto; margin-right: auto; width: 95%;"> 
+                      Grad-CAM visualizations of the last hidden state heatmap along with t-SNE visualizations of the user's query and keyframe features of the first example shown in Examples section. 
+                      As demonstrated, the retrieved auxiliary texts help <strong>cross-modality alignment</strong> by assisting the model to <strong>pay more attention to query-relevant keyframes</strong> and thus generate more robust and accurate answers to the user's query.
+                    </p>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+</section>
+
+
+</section>
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mathvista_other" id="citation">Citation</h1>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <pre><code>@misc{luo2024videoragvisuallyalignedretrievalaugmentedlong,
+    title={Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension}, 
+    author={Yongdong Luo and Xiawu Zheng and Xiao Yang and Guilin Li and Haojia Lin and Jinfa Huang and Jiayi Ji and Fei Chao and Jiebo Luo and Rongrong Ji},
+    year={2024},
+    eprint={2411.13093},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2411.13093}, 
+  }
+</code></pre>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container" style="width: 60%;">
+  <style>
+      pre {
+        background-color: #f4f4f4;
+        padding: 5px; /* 调整padding为5px */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow-x: auto; /* 允许水平滚动 */
+    }
+    code {
+        font-family: Consolas, "Courier New", monospace;
+        color: #d63384; /* 代码文本颜色 */
+    }
+  </style>
+
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <!-- <div class="container"> -->
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p style="text-align: center;">
+            This website is adapted from <a href="https://github.com/BradyFU/Video-MME">Video-MME</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</footer>
+
+</body>
+</html>
+
