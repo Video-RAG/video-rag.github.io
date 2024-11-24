@@ -38,12 +38,6 @@
         pointer-events: none;
         background-image: none !important; /* Remove the sort arrow */
     }
-    .visit-counter {
-        font-size: 18px;
-        color: #dd2f2f;
-        margin-top: -100px;
-        margin-left: 20px;
-    }
   </style>
 
 </head>
@@ -179,7 +173,6 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     updateRowNumbers();
-    updateVisitCounter();
     document.querySelector("#results").addEventListener("click", updateRowNumbers);
   });
 
@@ -190,13 +183,6 @@
     });
   }
   
-  function updateVisitCounter() {
-    const counterElement = document.getElementById("visit-counter");
-    let visits = localStorage.getItem('visitCount');
-    visits = visits ? parseInt(visits) + 1 : 1;
-    localStorage.setItem('visitCount', visits);
-    counterElement.innerText = 'Visits: ' + visits;
-  }
 </script>
 
 <section class="section">
@@ -649,8 +635,6 @@
 
   </div>
 </section>
-
-<div class="visit-counter" id="visit-counter">Visits: 0</div>
 
 <footer class="footer">
   <!-- <div class="container"> -->
